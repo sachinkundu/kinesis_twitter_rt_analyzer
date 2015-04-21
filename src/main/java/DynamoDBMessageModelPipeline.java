@@ -25,6 +25,8 @@ import com.amazonaws.services.kinesis.connectors.interfaces.IEmitter;
 import com.amazonaws.services.kinesis.connectors.interfaces.IFilter;
 import com.amazonaws.services.kinesis.connectors.interfaces.IKinesisConnectorPipeline;
 import com.amazonaws.services.kinesis.connectors.interfaces.ITransformer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * The Pipeline used by the Amazon DynamoDB sample. Processes KinesisMessageModel records in JSON String
@@ -39,6 +41,8 @@ import com.amazonaws.services.kinesis.connectors.interfaces.ITransformer;
 public class DynamoDBMessageModelPipeline implements
         IKinesisConnectorPipeline<KinesisMessageModel, Map<String, AttributeValue>> {
 
+    private static final Log LOG = LogFactory.getLog(DynamoDBMessageModelPipeline.class);
+
     @Override
     public IEmitter<Map<String, AttributeValue>> getEmitter(KinesisConnectorConfiguration configuration) {
         return new DynamoDBEmitter(configuration);
@@ -52,7 +56,13 @@ public class DynamoDBMessageModelPipeline implements
     @Override
     public ITransformer<KinesisMessageModel, Map<String, AttributeValue>>
     getTransformer(KinesisConnectorConfiguration configuration) {
-        return new KinesisMessageModelDynamoDBTransformer();
+        KinesisMessageModelDynamoDBTransformer transformer = null;
+        try {
+            transformer = new KinesisMessageModelDynamoDBTransformer();
+        } catch (NoSuchMethodException e) {
+            LOG.debug("getTransformer NoSuchMethodException");
+        }
+        return transformer;
     }
 
     @Override

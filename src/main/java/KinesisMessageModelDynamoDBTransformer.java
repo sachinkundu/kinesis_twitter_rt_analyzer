@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.kinesis.connectors.BasicJsonTransformer;
 import com.amazonaws.services.kinesis.connectors.dynamodb.DynamoDBTransformer;
 
 /**
@@ -25,37 +24,26 @@ import com.amazonaws.services.kinesis.connectors.dynamodb.DynamoDBTransformer;
  * usable for insertions to Amazon DynamoDB.
  */
 public class KinesisMessageModelDynamoDBTransformer extends
-        BasicJsonTransformer<KinesisMessageModel, Map<String, AttributeValue>> implements
+        JsonTransformer<KinesisMessageModel, Map<String, AttributeValue>> implements
         DynamoDBTransformer<KinesisMessageModel> {
 
     /**
      * Creates a new KinesisMessageModelDynamoDBTransformer.
      */
-    public KinesisMessageModelDynamoDBTransformer() {
+    public KinesisMessageModelDynamoDBTransformer() throws NoSuchMethodException {
         super(KinesisMessageModel.class);
     }
 
     @Override
     public Map<String, AttributeValue> fromClass(KinesisMessageModel message) {
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
-        putIntegerIfNonempty(item, "user_id", message.userid);
-        putStringIfNonempty(item, "username", message.username);
-        putStringIfNonempty(item, "firstname", message.firstname);
-        putStringIfNonempty(item, "lastname", message.lastname);
-        putStringIfNonempty(item, "city", message.city);
-        putStringIfNonempty(item, "state", message.state);
-        putStringIfNonempty(item, "email", message.email);
-        putStringIfNonempty(item, "phone", message.phone);
-        putBoolIfNonempty(item, "likesports", message.likesports);
-        putBoolIfNonempty(item, "liketheatre", message.liketheatre);
-        putBoolIfNonempty(item, "likeconcerts", message.likeconcerts);
-        putBoolIfNonempty(item, "likejazz", message.likejazz);
-        putBoolIfNonempty(item, "likeclassical", message.likeclassical);
-        putBoolIfNonempty(item, "likeopera", message.likeopera);
-        putBoolIfNonempty(item, "likerock", message.likerock);
-        putBoolIfNonempty(item, "likevegas", message.likevegas);
-        putBoolIfNonempty(item, "likebroadway", message.likebroadway);
-        putBoolIfNonempty(item, "likemusicals", message.likemusicals);
+        putStringIfNonempty(item, "str_id", message.str_id);
+        putIntegerIfNonempty(item, "favorite_count", message.favorite_count);
+//        putFloatIfNonempty(item, "coordinates_x", message.coordinates_x);
+//        putFloatIfNonempty(item, "coordinates_y", message.coordinates_y);
+        putIntegerIfNonempty(item, "retweet_count", message.retweet_count);
+        putStringIfNonempty(item, "text", message.text);
+        putStringIfNonempty(item, "source", message.source);
         return item;
     }
 
@@ -73,17 +61,6 @@ public class KinesisMessageModelDynamoDBTransformer extends
     }
 
     /**
-     * Helper method to map boolean attributes to an AttributeValue.
-     *
-     * @param item The map of attribute names to AttributeValues to store the attribute in
-     * @param key The key to store in the map
-     * @param value The value to insert into the item map
-     */
-    private void putBoolIfNonempty(Map<String, AttributeValue> item, String key, Boolean value) {
-        putStringIfNonempty(item, key, Boolean.toString(value));
-    }
-
-    /**
      * Helper method to map nonempty Integer attributes to an AttributeValue.
      *
      * @param item The map of attribute names to AttributeValues to store the attribute in
@@ -93,4 +70,7 @@ public class KinesisMessageModelDynamoDBTransformer extends
     private void putIntegerIfNonempty(Map<String, AttributeValue> item, String key, Integer value) {
         putStringIfNonempty(item, key, Integer.toString(value));
     }
-}
+
+    private void putFloatIfNonempty(Map<String, AttributeValue> item, String key, Float value) {
+        putStringIfNonempty(item, key, Float.toString(value));
+    }}

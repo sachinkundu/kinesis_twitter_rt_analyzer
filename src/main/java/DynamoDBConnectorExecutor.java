@@ -130,7 +130,7 @@ public class DynamoDBConnectorExecutor extends KinesisConnectorExecutorBase<Kine
     }
 
     public static void main(String[] args) {
-        String configFile = "DynamoDBSample.properties";
+        String configFile = "DynamoDB.properties";
         DynamoDBConnectorExecutor dynamoDBExecutor = new DynamoDBConnectorExecutor(configFile);
         dynamoDBExecutor.run();
     }
