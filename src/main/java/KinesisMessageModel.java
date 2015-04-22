@@ -12,8 +12,8 @@ public class KinesisMessageModel implements Serializable {
 
     public String str_id;
     public Integer favorite_count;
-//    public Float coordinates_x;
-//    public Float coordinates_y;
+    public Double coordinates_x;
+    public Double coordinates_y;
     public Integer retweet_count;
     public String text;
     public String source;
@@ -27,16 +27,16 @@ public class KinesisMessageModel implements Serializable {
 
     public KinesisMessageModel(String str_id,
                                Integer favorite_count,
-                               Float coordinates_x,
-                               Float coordinates_y,
+                               Double coordinates_x,
+                               Double coordinates_y,
                                Integer retweet_count,
                                String text,
                                String source)
     {
         this.str_id = str_id;
         this.favorite_count = favorite_count;
-//        this.coordinates_x = coordinates_x;
-//        this.coordinates_y = coordinates_y;
+        this.coordinates_x = coordinates_x;
+        this.coordinates_y = coordinates_y;
         this.retweet_count = retweet_count;
         this.text = text;
         this.source = source;
@@ -63,15 +63,15 @@ public class KinesisMessageModel implements Serializable {
         this.favorite_count = count;
     }
 
-//    public Float getCoordinateX() {
-//        return coordinates_x;
-//    }
-//    public void setCoordinateX(Float x) {
-//        this.coordinates_x= x;
-//    }
-//
-//    public Float getCoordinateY() { return coordinates_y; }
-//    public void  setCoordinateY(Float y) { this.coordinates_y= y; }
+    public Double getCoordinateX() {
+        return coordinates_x;
+    }
+    public void setCoordinateX(Double x) {
+        this.coordinates_x= x;
+    }
+
+    public Double getCoordinateY() { return coordinates_y; }
+    public void  setCoordinateY(Double y) { this.coordinates_y= y; }
 
     public Integer getRetweetCount() {
         return retweet_count;
@@ -90,8 +90,8 @@ public class KinesisMessageModel implements Serializable {
         int result = 1;
         result = prime * result + str_id.hashCode();
         result = prime * result + ((favorite_count == null) ? 0 : favorite_count.hashCode());
-//        result = prime * result + ((coordinates_x == null) ? 0 : coordinates_x.hashCode());
-//        result = prime * result + ((coordinates_y == null) ? 0 : coordinates_y.hashCode());
+        result = prime * result + ((coordinates_x == null) ? 0 : coordinates_x.hashCode());
+        result = prime * result + ((coordinates_y == null) ? 0 : coordinates_y.hashCode());
         result = prime * result + (retweet_count == 0 ? 0 : retweet_count.hashCode());
         result = prime * result + (text == null ? 1231 : text.hashCode());
         result = prime * result + (source == null ? 1231 : source.hashCode());
@@ -124,20 +124,20 @@ public class KinesisMessageModel implements Serializable {
         } else if (!favorite_count.equals(other.favorite_count)) {
             return false;
         }
-//        if (coordinates_x == null) {
-//            if (other.coordinates_x != null) {
-//                return false;
-//            }
-//        } else if (!coordinates_x.equals(other.coordinates_x)) {
-//            return false;
-//        }
-//        if (coordinates_y == null) {
-//            if (other.coordinates_y != null) {
-//                return false;
-//            }
-//        } else if (!coordinates_y.equals(other.coordinates_y)) {
-//            return false;
-//        }
+        if (coordinates_x == null) {
+            if (other.coordinates_x != null) {
+                return false;
+            }
+        } else if (!coordinates_x.equals(other.coordinates_x)) {
+            return false;
+        }
+        if (coordinates_y == null) {
+            if (other.coordinates_y != null) {
+                return false;
+            }
+        } else if (!coordinates_y.equals(other.coordinates_y)) {
+            return false;
+        }
         if (retweet_count != other.retweet_count) {
             return false;
         }

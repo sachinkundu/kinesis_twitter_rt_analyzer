@@ -17,7 +17,7 @@ public class TwitterStreamReader {
                            String secret, KinesisProducer producer) throws InterruptedException {
         BlockingQueue<String> queue = new LinkedBlockingQueue<String>(10000);
         StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
-        endpoint.trackTerms(Lists.newArrayList("#porn"));
+        endpoint.trackTerms(Lists.newArrayList("#EarthDay2015"));
 
         Authentication auth = new OAuth1(consumerKey, consumerSecret, token, secret);
         Client client = new ClientBuilder()

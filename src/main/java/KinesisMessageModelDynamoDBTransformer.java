@@ -39,8 +39,8 @@ public class KinesisMessageModelDynamoDBTransformer extends
         Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
         putStringIfNonempty(item, "str_id", message.str_id);
         putIntegerIfNonempty(item, "favorite_count", message.favorite_count);
-//        putFloatIfNonempty(item, "coordinates_x", message.coordinates_x);
-//        putFloatIfNonempty(item, "coordinates_y", message.coordinates_y);
+        putDoubleIfNonempty(item, "coordinates_x", message.coordinates_x);
+        putDoubleIfNonempty(item, "coordinates_y", message.coordinates_y);
         putIntegerIfNonempty(item, "retweet_count", message.retweet_count);
         putStringIfNonempty(item, "text", message.text);
         putStringIfNonempty(item, "source", message.source);
@@ -55,7 +55,7 @@ public class KinesisMessageModelDynamoDBTransformer extends
      * @param value The value to check before inserting into the item map
      */
     private void putStringIfNonempty(Map<String, AttributeValue> item, String key, String value) {
-        if (value != null && !value.isEmpty()) {
+        if (!value.equals(null) && !value.isEmpty()) {
             item.put(key, new AttributeValue().withS(value));
         }
     }
@@ -68,9 +68,11 @@ public class KinesisMessageModelDynamoDBTransformer extends
      * @param value The value to insert into the item map
      */
     private void putIntegerIfNonempty(Map<String, AttributeValue> item, String key, Integer value) {
-        putStringIfNonempty(item, key, Integer.toString(value));
+        if(value != null)
+            putStringIfNonempty(item, key, Integer.toString(value));
     }
 
-    private void putFloatIfNonempty(Map<String, AttributeValue> item, String key, Float value) {
-        putStringIfNonempty(item, key, Float.toString(value));
+    private void putDoubleIfNonempty(Map<String, AttributeValue> item, String key, Double value) {
+        if(value != null)
+            putStringIfNonempty(item, key, Double.toString(value));
     }}

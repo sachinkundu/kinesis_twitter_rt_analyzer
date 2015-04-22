@@ -31,6 +31,18 @@ public abstract class JsonTransformer<T, U> implements ITransformer<T, U> {
         ((KinesisMessageModel)(tweet)).favorite_count= json.getInt("favorite_count");
         ((KinesisMessageModel)(tweet)).text = json.getString("text");
         ((KinesisMessageModel)(tweet)).source = json.getString("source");
+        Object coordinates = json.get("coordinates");
+        if (!coordinates.equals(null) ) {
+            ((KinesisMessageModel)(tweet)).coordinates_x = (Double)(((JSONObject)(coordinates))
+                                                                    .getJSONArray("coordinates")
+                                                                    .get(0));
+            ((KinesisMessageModel)(tweet)).coordinates_y = (Double)(((JSONObject)(coordinates))
+                                                                    .getJSONArray("coordinates")
+                                                                    .get(1));
+        } else {
+            ((KinesisMessageModel)(tweet)).coordinates_x = null;
+            ((KinesisMessageModel)(tweet)).coordinates_y = null;
+        }
         return tweet;
     }
 
